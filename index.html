@@ -64,6 +64,11 @@ button:hover{
     background:#ff69b4;
 }
 
+button:disabled{
+    background:#ffb3d9;
+    cursor:not-allowed;
+}
+
 #success{
     display:none;
     text-align:center;
@@ -72,6 +77,13 @@ button:hover{
 
 h2{
     color:#ff1493;
+}
+
+.error{
+    color:#ff1493;
+    text-align:center;
+    margin-top:10px;
+    display:none;
 }
 </style>
 
@@ -85,45 +97,44 @@ h2{
 
 <p>Hello handsome! Please answer honestly. 😂❤️</p>
 
-<form id="form" action="https://formsubmit.co/gracequince786@gmail.com" method="POST">
+<form id="form">
 
 <label>👤 Full Name</label>
-<input type="text" name="Full Name" required>
+<input type="text" id="fullName" required>
 
 <label>🎂 Age</label>
-<input type="number" name="Age" required>
+<input type="number" id="age" required>
 
 <label>🍕 Favorite Food</label>
-<input type="text" name="Favorite Food" required>
+<input type="text" id="food" required>
 
 <label>♈ Zodiac Sign</label>
-<input type="text" name="Zodiac Sign" required>
+<input type="text" id="zodiac" required>
 
 <label>🙏 Religion</label>
-<input type="text" name="Religion" required>
+<input type="text" id="religion" required>
 
 <label>💼 Career</label>
-<input type="text" name="Career" required>
+<input type="text" id="career" required>
 
 <label>🌟 Future Goals</label>
-<textarea name="Future Goals" rows="4"></textarea>
+<textarea id="goals" rows="4"></textarea>
 
 <label>💖 What do you love most about Grace?</label>
-<textarea name="What do you love most about Grace" rows="4"></textarea>
+<textarea id="love" rows="4"></textarea>
 
 <label>❤️ Will you continue loving Grace forever?</label>
 
-<select name="Will you continue loving Grace forever" required>
+<select id="forever" required>
 <option>Choose one...</option>
 <option>Yes ❤️</option>
 <option>Absolutely ❤️❤️</option>
 <option>Forever ❤️❤️❤️</option>
 </select>
 
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_next" value="https://gracequince786-lang.github.io/Boyfriend-questionnaire-/success.html">
-
 <button type="submit">Submit 💕</button>
+
+<div class="error" id="error"></div>
 
 </form>
 
@@ -148,6 +159,49 @@ Reward:
 </div>
 
 </div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+
+<script type="text/javascript">
+(function(){
+  emailjs.init("uVJq6nZVdIKGZqbvX");
+})();
+
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
+  
+  const button = document.querySelector("button");
+  button.disabled = true;
+  button.textContent = "Sending...";
+  
+  const templateParams = {
+    to_email: "gracequince786@gmail.com",
+    from_name: document.getElementById("fullName").value,
+    full_name: document.getElementById("fullName").value,
+    age: document.getElementById("age").value,
+    favorite_food: document.getElementById("food").value,
+    zodiac_sign: document.getElementById("zodiac").value,
+    religion: document.getElementById("religion").value,
+    career: document.getElementById("career").value,
+    future_goals: document.getElementById("goals").value,
+    love_about_grace: document.getElementById("love").value,
+    forever_answer: document.getElementById("forever").value
+  };
+
+  emailjs.send("service_boyfriend", "template_boyfriend", templateParams)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      document.getElementById("form").style.display="none";
+      document.getElementById("success").style.display="block";
+    }, function(error) {
+      console.log('FAILED...', error);
+      document.getElementById("error").textContent = "Error sending form. Please try again.";
+      document.getElementById("error").style.display = "block";
+      button.disabled = false;
+      button.textContent = "Submit 💕";
+    });
+});
+</script>
 
 </body>
 </html>
