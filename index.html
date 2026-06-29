@@ -45,6 +45,7 @@ input,textarea,select{
     border:2px solid pink;
     border-radius:10px;
     font-size:16px;
+    box-sizing:border-box;
 }
 
 button{
@@ -84,40 +85,43 @@ h2{
 
 <p>Hello handsome! Please answer honestly. 😂❤️</p>
 
-<form id="form">
+<form id="form" action="https://formsubmit.co/gracequince786@gmail.com" method="POST">
 
 <label>👤 Full Name</label>
-<input type="text" required>
+<input type="text" name="Full Name" required>
 
 <label>🎂 Age</label>
-<input type="number" required>
+<input type="number" name="Age" required>
 
 <label>🍕 Favorite Food</label>
-<input type="text" required>
+<input type="text" name="Favorite Food" required>
 
 <label>♈ Zodiac Sign</label>
-<input type="text" required>
+<input type="text" name="Zodiac Sign" required>
 
 <label>🙏 Religion</label>
-<input type="text" required>
+<input type="text" name="Religion" required>
 
 <label>💼 Career</label>
-<input type="text" required>
+<input type="text" name="Career" required>
 
 <label>🌟 Future Goals</label>
-<textarea rows="4"></textarea>
+<textarea name="Future Goals" rows="4"></textarea>
 
-<label>💖 What do you love most about me?</label>
-<textarea rows="4"></textarea>
+<label>💖 What do you love most about Grace?</label>
+<textarea name="What do you love most about Grace" rows="4"></textarea>
 
 <label>❤️ Will you continue loving Grace forever?</label>
 
-<select required>
+<select name="Will you continue loving Grace forever" required>
 <option>Choose one...</option>
 <option>Yes ❤️</option>
 <option>Absolutely ❤️❤️</option>
 <option>Forever ❤️❤️❤️</option>
 </select>
+
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="https://gracequince786-lang.github.io/Boyfriend-questionnaire-/success.html">
 
 <button type="submit">Submit 💕</button>
 
@@ -144,14 +148,6 @@ Reward:
 </div>
 
 </div>
-
-<script>
-document.getElementById("form").addEventListener("submit",function(e){
-e.preventDefault();
-document.getElementById("form").style.display="none";
-document.getElementById("success").style.display="block";
-});
-</script>
 
 </body>
 </html>
