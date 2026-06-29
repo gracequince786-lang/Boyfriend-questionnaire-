@@ -58,6 +58,7 @@ button{
     color:white;
     font-size:18px;
     cursor:pointer;
+    font-weight:bold;
 }
 
 button:hover{
@@ -77,6 +78,16 @@ button:disabled{
 
 h2{
     color:#ff1493;
+    font-size:28px;
+}
+
+.reward{
+    background:#fff0f6;
+    padding:20px;
+    border-radius:15px;
+    margin-top:20px;
+    font-size:20px;
+    border:3px solid #ff1493;
 }
 
 .error{
@@ -84,6 +95,12 @@ h2{
     text-align:center;
     margin-top:10px;
     display:none;
+    font-weight:bold;
+}
+
+.success-text{
+    color:#555;
+    font-size:18px;
 }
 </style>
 
@@ -100,33 +117,33 @@ h2{
 <form id="form">
 
 <label>👤 Full Name</label>
-<input type="text" id="fullName" required>
+<input type="text" id="fullName" name="full_name" required>
 
 <label>🎂 Age</label>
-<input type="number" id="age" required>
+<input type="number" id="age" name="age" required>
 
 <label>🍕 Favorite Food</label>
-<input type="text" id="food" required>
+<input type="text" id="food" name="favorite_food" required>
 
 <label>♈ Zodiac Sign</label>
-<input type="text" id="zodiac" required>
+<input type="text" id="zodiac" name="zodiac_sign" required>
 
 <label>🙏 Religion</label>
-<input type="text" id="religion" required>
+<input type="text" id="religion" name="religion" required>
 
 <label>💼 Career</label>
-<input type="text" id="career" required>
+<input type="text" id="career" name="career" required>
 
 <label>🌟 Future Goals</label>
-<textarea id="goals" rows="4"></textarea>
+<textarea id="goals" name="future_goals" rows="4"></textarea>
 
 <label>💖 What do you love most about Grace?</label>
-<textarea id="love" rows="4"></textarea>
+<textarea id="love" name="love_about_grace" rows="4"></textarea>
 
 <label>❤️ Will you continue loving Grace forever?</label>
 
-<select id="forever" required>
-<option>Choose one...</option>
+<select id="forever" name="forever_answer" required>
+<option value="">Choose one...</option>
 <option>Yes ❤️</option>
 <option>Absolutely ❤️❤️</option>
 <option>Forever ❤️❤️❤️</option>
@@ -140,21 +157,15 @@ h2{
 
 <div id="success">
 
-<h2>🎉 Application Submitted 🎉</h2>
+<h2>🎉 Application Submitted! 🎉</h2>
 
-<p>
-Thank you for completing the questionnaire!
-</p>
+<p class="success-text">Thank you for completing the questionnaire!</p>
 
-<p>
-Status:
-<strong>Approved ❤️</strong>
-</p>
+<p class="success-text">Status: <strong>Approved ❤️</strong></p>
 
-<p>
-Reward:
-💋 One Hug & One Kiss Coupon
-</p>
+<div class="reward">
+  💋 One Hug & One Kiss Coupon 💋
+</div>
 
 </div>
 
@@ -172,7 +183,7 @@ document.getElementById("form").addEventListener("submit", function(e){
   
   const button = document.querySelector("button");
   button.disabled = true;
-  button.textContent = "Sending...";
+  button.textContent = "Sending... ⏳";
   
   const templateParams = {
     to_email: "gracequince786@gmail.com",
@@ -188,14 +199,16 @@ document.getElementById("form").addEventListener("submit", function(e){
     forever_answer: document.getElementById("forever").value
   };
 
+  console.log("Sending with params:", templateParams);
+
   emailjs.send("service_2ctr2jp", "template_0r167vo", templateParams)
     .then(function(response) {
-      console.log('SUCCESS!', response.status, response.text);
+      console.log('EMAIL SENT!', response.status, response.text);
       document.getElementById("form").style.display="none";
       document.getElementById("success").style.display="block";
     }, function(error) {
-      console.log('FAILED...', error);
-      document.getElementById("error").textContent = "Error sending form. Please try again.";
+      console.log('EMAIL FAILED:', error);
+      document.getElementById("error").textContent = "⚠️ Error: " + error.text;
       document.getElementById("error").style.display = "block";
       button.disabled = false;
       button.textContent = "Submit 💕";
